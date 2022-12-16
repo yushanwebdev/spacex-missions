@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client';
-import Head from 'next/head'
-import client from '../apollo-client';
-import styles from '../styles/Home.module.css'
-
+import { gql } from "@apollo/client";
+import Head from "next/head";
+import Link from "next/link";
+import client from "../apollo-client";
+import styles from "../styles/Home.module.css";
 
 function fetchDate(date) {
   const newDate = new Date(date);
@@ -12,11 +12,11 @@ function fetchDate(date) {
   const year = newDate.getFullYear();
 
   return [day, month, year];
-};
+}
 
-export default function Home({nextLaunch}) {
-  const {mission_name, launch_date_local, launch_site} = nextLaunch;
-  const nextLaunchDate = fetchDate(launch_date_local).join('/');
+export default function Home({ nextLaunch }) {
+  const { mission_name, launch_date_local, launch_site } = nextLaunch;
+  const nextLaunchDate = fetchDate(launch_date_local).join("/");
 
   return (
     <div className={styles.container}>
@@ -26,17 +26,23 @@ export default function Home({nextLaunch}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Next SpaceX Launch
-        </h1>
+        <Link href="/">SSR</Link>
+        <Link href="/isr">ISR</Link>
+        <h1 className={styles.title}>Next SpaceX Launch</h1>
         <p className={styles.description}>
-          <span>🚀 Mission name: <strong>{mission_name}</strong></span>
-          <span>📅 Date: <strong>{nextLaunchDate}</strong></span>
-          <span>🏠 Launched from: <strong>{launch_site.site_name_long}</strong></span>
+          <span>
+            🚀 Mission name: <strong>{mission_name}</strong>
+          </span>
+          <span>
+            📅 Date: <strong>{nextLaunchDate}</strong>
+          </span>
+          <span>
+            🏠 Launched from: <strong>{launch_site.site_name_long}</strong>
+          </span>
         </p>
       </main>
     </div>
-  )
+  );
 }
 
 export async function getStaticProps() {
@@ -57,5 +63,5 @@ export async function getStaticProps() {
     props: {
       nextLaunch: data.launchNext,
     },
- };
+  };
 }
